@@ -110,7 +110,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employees")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -211,7 +211,7 @@ public ResponseEntity<Employee> read(@PathVariable Integer id) {
 - Spring data enables us to do 
 
 References:
-* [Spring Data JPA]:[https://docs.spring.io/spring-data/jpa/docs/current/reference/html/](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
+* Spring Data JPA: [https://docs.spring.io/spring-data/jpa/docs/current/reference/html/](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
 * Hibernate ORM: [https://hibernate.org/orm/](https://hibernate.org/orm/)
 * Jakarta Persistence API: [https://jakarta.ee/specifications/persistence/2.2/](https://jakarta.ee/specifications/persistence/2.2/)
 * Liquibase [https://www.liquibase.org/](https://www.liquibase.org/)
