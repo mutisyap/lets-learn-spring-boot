@@ -1,36 +1,38 @@
 package com.pmutisya.learnspringboot.service;
 
 import com.pmutisya.learnspringboot.entity.Employee;
+import com.pmutisya.learnspringboot.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
-    private final Map<Integer, Employee> employeeMap = new HashMap<>();
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public Employee create(Employee employee) {
-        employeeMap.put(employee.getId(), employee);
-        return employee;
+        return employeeRepository.save(employee);
     }
 
     public Employee update(Employee employee, Integer id) {
-        employeeMap.put(id, employee);
-        return employee;
+        return employeeRepository.save(employee);
     }
 
-    public Employee read(Integer id) {
-        return employeeMap.get(id);
+    public Optional<Employee> read(Integer id) {
+        return employeeRepository.findById(id);
     }
 
     public List<Employee> readAll() {
-        return new ArrayList<>(employeeMap.values());
+        return employeeRepository.findAll();
     }
 
     public void delete(Integer id) {
-        employeeMap.remove(id);
+        employeeRepository.deleteById(id);
     }
 }
