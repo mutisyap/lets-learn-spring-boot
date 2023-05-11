@@ -100,8 +100,9 @@ spring:
 ## Converting out Employee entity to a JPA entity <a name="converting-out-employee-entity-to-a-jpa-entity"></a>
 - We need to make our Employee class a Jpa Entity. We do this by adding the @Entity annotation, and then add the @Table annotation to point it to the table to use.
 - Doing so will make hibernate create the table for us. We will also add the @Id annotation to the id field to make it the primary key.
+
 ```java
-package com.pmutisya.learnspringboot.entity;
+package com.pmutisya.learnspringboot.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -112,21 +113,21 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "employees")
 public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
-    private String company;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+  private String name;
+  private String company;
 
-    public Employee() {
-    }
+  public Employee() {
+  }
 
-    public Employee(Integer id, String name, String company) {
-        this.id = id;
-        this.name = name;
-        this.company = company;
-    }
-    // getters and setters
+  public Employee(Integer id, String name, String company) {
+    this.id = id;
+    this.name = name;
+    this.company = company;
+  }
+  // getters and setters
 }
 ```
 - We have made our Employee class a Jpa Entity, told it to refer to the table called employee, and made the id field the primary key. The GenerationType.IDENTITY tells hibernate to use the database's auto-increment feature to generate the id for us. Other options include GenerationType.AUTO, GenerationType.SEQUENCE, and GenerationType.TABLE. We will look at these in the future.
@@ -140,7 +141,7 @@ public class Employee {
 ```java
 package com.pmutisya.learning.repository;
 
-import com.pmutisya.learnspringboot.entity.Employee;
+import com.pmutisya.learnspringboot.domain.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 }
@@ -152,10 +153,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
 ## Changing our service to stop caching and start persisting
 - We start by adding our EmployeeRepository object in the EmployeeService, but instead of initializing it, we just set it in the constructor, and let Spring Dependency Injection do the rest.
+
 ```java
 package com.pmutisya.learnspringboot.service;
 
-import com.pmutisya.learnspringboot.entity.Employee;
+import com.pmutisya.learnspringboot.domain.Employee;
 import com.pmutisya.learnspringboot.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -165,31 +167,31 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
-    private final EmployeeRepository employeeRepository;
+  private final EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+  public EmployeeService(EmployeeRepository employeeRepository) {
+    this.employeeRepository = employeeRepository;
+  }
 
-    public Employee create(Employee employee) {
-        return employeeRepository.save(employee);
-    }
+  public Employee create(Employee employee) {
+    return employeeRepository.save(employee);
+  }
 
-    public Employee update(Employee employee, Integer id) {
-        return employeeRepository.save(employee);
-    }
+  public Employee update(Employee employee, Integer id) {
+    return employeeRepository.save(employee);
+  }
 
-    public Optional<Employee> read(Integer id) {
-        return employeeRepository.findById(id);
-    }
+  public Optional<Employee> read(Integer id) {
+    return employeeRepository.findById(id);
+  }
 
-    public List<Employee> readAll() {
-        return employeeRepository.findAll();
-    }
+  public List<Employee> readAll() {
+    return employeeRepository.findAll();
+  }
 
-    public void delete(Integer id) {
-        employeeRepository.deleteById(id);
-    }
+  public void delete(Integer id) {
+    employeeRepository.deleteById(id);
+  }
 }
 ```
 + Some changes we've made here. We've forst of all removed the map, and replaced map methods with the employeereporitory methods of save, findById, findAll, and deleteById. We've also removed the caching, as we don't need it anymore.

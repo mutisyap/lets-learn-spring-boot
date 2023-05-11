@@ -6,8 +6,9 @@ Remember: Keep your functions public. A private function will not be properly ma
 
 ## Employee Entity
 Let's start by creating the Employee entity. We'll create a new package called `entity` in the `com.pmutisya.learnspringboot` package. Then we'll create a new class called `Employee` in the `entity` package. We'll add the following fields to the class, and their getters and setters.
+
 ```java
-package com.pmutisya.learnspringboot.entity;
+package com.pmutisya.learnspringboot.domain;
 
 public class Employee {
     private Integer id;
